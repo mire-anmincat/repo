@@ -1,0 +1,26 @@
+# Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
+pkgname=nodm
+pkgver=92081f1
+pkgrel=0
+pkgdesc="Automatic display manager."
+options="!check"
+url="https://github.com/mire-anmincat/nodm"
+arch="x86_64"
+license="GPLv2"
+makedepends="autoconf automake help2man libx11-dev linux-pam-dev linux-headers help2man"
+source="https://github.com/mire-anmincat/nodm/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	./autogen.sh
+	./configure
+	make
+}
+
+package() {
+	install -Dm755 nodm "$pkgdir"/usr/bin/nodm
+}
+
+sha512sums="
+160a75221bea235411f86de63deb266ac7ae2c398fda58e29aa9687589074aa6af2af9271b0613d67e201010b490b8aea8f8a66118c33d8dba65192a23b62acc  nodm-92081f1.tar.gz
+"

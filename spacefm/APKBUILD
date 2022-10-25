@@ -1,0 +1,33 @@
+# Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
+pkgname=spacefm
+pkgver=1.0.6
+pkgrel=0
+pkgdesc="SpaceFM is a multi-panel tabbed file and desktop manager for Linux"
+url="https://github.com/mire-anmincat/spacefm"
+options="!check"
+arch="all"
+license="GPL-3.0"
+depends="gtk+2.0 libudev-zero desktop-file-utils shared-mime-info"
+makedepends="gtk+2.0-dev intltool pkgconf libudev-zero-dev"
+source="https://github.com/mire-anmincat/spacefm/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	./configure \
+		--with-gtk2 \
+		--disable-nls \
+		--disable-startup-notification \
+		--disable-superuser-checks \
+		--disable-video-thumbnails \
+		--enable-pixmaps
+	make
+}
+
+package() {
+	install -Dm 644 etc/spacefm.conf "$pkgdir"/etc/spacefm.conf
+	install -Dm 755 src/spacefm "$pkgdir"/usr/bin/spacefm
+}
+
+sha512sums="
+20b2cbc96a2c82c193c4f3ba08280af0354b1fd13ea73c168ecd0696fce8ff4436ab8c237519550f0a3d95013f3ec44817180e227d369373a61ab57a0a07a830  spacefm-1.0.6.tar.gz
+"

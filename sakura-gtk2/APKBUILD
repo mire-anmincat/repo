@@ -1,0 +1,26 @@
+# Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
+pkgname=sakura-gtk2
+pkgver=2.4.2
+pkgrel=0
+pkgdesc="GTK/VTE based terminal emulator"
+options="!check"
+url="https://github.com/mire-anmincat/sakura-gtk2"
+arch="x86_64"
+license="GPLv2"
+depends="glib gtk+2.0 musl"
+makedepends="cmake pkgconf glib-dev gtk+2.0-dev"
+source="https://github.com/mire-anmincat/sakura-gtk2/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	cmake .
+	make
+}
+
+package() {
+	install -Dm755 src/sakura "$pkgdir"/usr/bin/sakura
+}
+
+sha512sums="
+80e82dbbed7cb1574fb549455c975e389913f72afb8d4664dbbc30fc55158392fc76d5e6ecbb808b9bf0abc15826f12ac034a2fa618928aac4a5c111fa174d0b  sakura-gtk2-2.4.2.tar.gz
+"
