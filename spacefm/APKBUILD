@@ -1,19 +1,28 @@
 # Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
 pkgname=spacefm
 pkgver=1.0.6
-pkgrel=0
-pkgdesc="SpaceFM is a multi-panel tabbed file and desktop manager for Linux"
-url="https://github.com/mire-anmincat/spacefm"
+pkgrel=2
+pkgdesc="Multi-panel tabbed file manager (GTK2 version)"
 options="!check"
 arch="all"
-license="GPL-3.0"
-depends="gtk+2.0 libudev-zero desktop-file-utils shared-mime-info"
-makedepends="gtk+2.0-dev intltool pkgconf libudev-zero-dev"
-source="https://github.com/mire-anmincat/spacefm/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
-builddir="$srcdir/${pkgname}-${pkgver}"
+url="https://ignorantguru.github.io/spacefm/"
+license="GPL-3.0-or-later"
+depends="bash"
+makedepends="intltool gettext-dev gtk+2.0-dev eudev-dev linux-headers"
+source="$pkgname-$pkgver.tar.gz::https://github.com/IgnorantGuru/spacefm/archive/$pkgver.tar.gz
+	spacefm-include-sysmacros.patch
+	gcc-10.patch
+	"
+
+prepare() {
+	default_prepare
+	update_config_guess
+	update_config_sub
+}
 
 build() {
 	./configure \
+	    --prefix=/usr \
 		--with-gtk2 \
 		--disable-nls \
 		--disable-startup-notification \
@@ -24,10 +33,9 @@ build() {
 }
 
 package() {
-	install -Dm 644 etc/spacefm.conf "$pkgdir"/etc/spacefm.conf
-	install -Dm 755 src/spacefm "$pkgdir"/usr/bin/spacefm
+	make -j1 DESTDIR="$pkgdir" install
 }
 
-sha512sums="
-20b2cbc96a2c82c193c4f3ba08280af0354b1fd13ea73c168ecd0696fce8ff4436ab8c237519550f0a3d95013f3ec44817180e227d369373a61ab57a0a07a830  spacefm-1.0.6.tar.gz
-"
+sha512sums="37fc0dd31f02158502f592415b4c375ee49560af6f03d75b035d7c6c45bdc47064bba1ae8987b4cc8be2e02b3dfcdc17ec760411975e7b5f74343a2293fb2c8c  spacefm-1.0.6.tar.gz
+d7b33441700141dc956df54f03393c02783fc5188b82883401d4781c52fb383089af5ed3b3645b686078a6ac06d3b3e269f7ee5ab3f4d1416ebb0141fbaa7b7e  spacefm-include-sysmacros.patch
+343f149b96655ffe930e2ea76e78fab407904a893669b6ca71ed1797292c81750782a91db589f87ef8951601b90179f7b83c900d0039276578624b64b2661dd1  gcc-10.patch"
