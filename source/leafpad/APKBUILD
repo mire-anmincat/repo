@@ -1,0 +1,30 @@
+# Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
+pkgname=leafpad
+pkgver=0.8.18.1
+pkgrel=0
+pkgdesc="A simple GTK+ text editor"
+url="http://tarot.freeshell.org/leafpad"
+options="!check"
+arch="all"
+license="GPL-2.0"
+depends="gtk+2.0"
+makedepends="gtk+2.0-dev"
+source="https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir"/${pkgname}-${pkgver}
+
+build() {
+	cd "$builddir"
+	./configure --prefix=/usr --enable-chooser
+	make
+}
+
+package() {
+	cd "$builddir"
+	chmod +x ./install-sh
+	make DESTDIR="$pkgdir" install
+	rm -rf "$pkgdir"/usr/share/locale
+}
+
+sha512sums="
+1caad712967f634f585ab32e406534b5ce2c5621008c1eb5b2b48f17ca0f48cd834ea2ea1c67eda4053fa84e8727ff0e708e99d3b5dad838dcf0701389788257  leafpad-0.8.18.1.tar.gz
+"
