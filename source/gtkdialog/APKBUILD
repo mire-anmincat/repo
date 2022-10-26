@@ -1,0 +1,26 @@
+# Maintainer:
+pkgname=gtkdialog
+pkgver=0.8.5
+pkgrel=0
+pkgdesc="Script friendly GTK GUI builder"
+url="https://github.com/puppylinux-woof-CE/gtkdialog"
+options="!check"
+arch="all"
+license="GPL-2.0"
+depends="gtk+2.0"
+makedepends="gtk+2.0-dev byacc flex texinfo"
+source="https://github.com/puppylinux-woof-CE/gtkdialog/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	./autogen.sh
+	make
+}
+
+package() {
+	install -Dm 755 src/gtkdialog "$pkgdir"/usr/bin/gtkdialog
+}
+
+sha512sums="
+5b2b36c20f74f5252067d5ad07846e5fa6a7a5b1f5e2a94e60d16df71df6a39fd53c206442c2e73274d61c503228bf180e9725371df300fc174539eec1dabe20  gtkdialog-0.8.5.tar.gz
+"
