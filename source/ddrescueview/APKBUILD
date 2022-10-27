@@ -1,0 +1,24 @@
+# Maintainer: Shinathip Duanghoy <shinathip.x2004@gmail.com>
+pkgname=ddrescueview
+pkgver=0.3
+pkgrel=0
+pkgdesc="A graphical display for GNU ddrescue logfiles"
+url="http://sourceforge.net/p/ddrescueview"
+options="!check"
+arch="all"
+license="GPL-2.0"
+depends="gtk+2.0"
+makedepends="fpc"
+source="https://github.com/mire-anmincat/ddrescueview/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	./build.sh
+}
+
+package() {
+	install -Dm 755 source/ddrescueview "$pkgdir"/usr/bin/ddrescueview
+}
+sha512sums="
+73cbe924edcb3008f2cbf8c0affd634412d29be4ee2d7c76fd9c6c2f5365651b8c480a88e62ec295909f6ad17157a4fddd669af9a8447d55b2faddecaaa7b780  ddrescueview-0.3.tar.gz
+"
